@@ -11,25 +11,52 @@ AES operates on a 4 × 4 column-major order array of bytes, termed the state
 ```
 #include <stdio.h>
 #include <string.h>
-
-void xorCrypt(char *in, char *key) {
-  for (int i = 0; in[i]; i++) in[i] ^= key[i % strlen(key)];
+void simpleAESEncrypt(char *plaintext, char *key, char *ciphertext)
+{
+int i;
+for (i = 0; i < strlen(plaintext); i++)
+{
+ciphertext[i] = plaintext[i] ^ key[i % strlen(key)];
 }
-
-int main() {
-  char msg[] = "CHARAN KUMAR", key[] = "secretkey";
-  printf("Original: %s\n", msg);
-  xorCrypt(msg, key);
-  printf("Encrypted: %s\n", msg);
-  xorCrypt(msg, key);
-  printf("Decrypted: %s\n", msg);
-  return 0;
+ciphertext[i] = '\0';
+}
+void simpleAESDecrypt(char *ciphertext, char *key, char *decryptedText)
+{
+int i;
+for (i = 0; i < strlen(ciphertext); i++)
+{
+    decryptedText[i] = ciphertext[i] ^ key[i % strlen(key)];
+}
+decryptedText[i] = '\0';
+}
+void printASCII(char *ciphertext)
+{
+printf("Encrypted Message (ASCII values): ");
+for (int i = 0; i < strlen(ciphertext); i++)
+{
+printf("%d ", (unsigned char)ciphertext[i]);
+}
+printf("\n");
+}
+int main()
+{
+char plaintext[100], key[100], ciphertext[100], decryptedText[100];
+printf("Enter the plaintext: ");
+scanf("%s", plaintext);
+printf("Enter the key: "); 
+scanf("%s", key);
+simpleAESEncrypt(plaintext, key, ciphertext);
+printASCII(ciphertext);
+simpleAESDecrypt(ciphertext, key, decryptedText);
+printf("Decrypted Message: %s\n", decryptedText);
+return 0;
 }
 ```
 # OUTPUT:
-<img width="1453" height="572" alt="Screenshot 2025-09-25 090359" src="https://github.com/user-attachments/assets/1413e341-ed1c-4ac6-91ec-47ae6396e383" />
 
+![WhatsApp Image 2025-09-25 at 09 07 07_8ba34e65](https://github.com/user-attachments/assets/4ab90483-9a6d-4bba-a37d-17e8ebb4bcea)
 
 # RESULT:
-The program is executed successfully.
+Thus code for Advanced Encryption Standard (AES) Algorithm for a practical application like URL Encryption is executed successfully.
+
 
